@@ -29,7 +29,7 @@ function rewrite(json){
 
 function getHTML(){
     
-var html = `<!DOCTYPE html>
+    var html = `<!DOCTYPE html>
 
 <html>
 
@@ -42,9 +42,9 @@ var html = `<!DOCTYPE html>
     <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="../../../d3_resources/d3_timeseries.min.css" />
+    <link rel="stylesheet" type="text/css" href="d3_resources/d3_timeseries.min.css" />
 
-    <link rel="stylesheet" type="text/css" href="../../../index.css" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
 
     <!-- Web fonts -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -55,7 +55,7 @@ var html = `<!DOCTYPE html>
         <img src="media/logo.jpg" class="logo align-self-center ml-5" />
     </header>
 
-    <main class="container-fluid">
+    <main class="container">
         <div class="row">
             <h2 class="sub-title ml-5 mt-5">
                 Catalytic activity chart
@@ -66,31 +66,32 @@ var html = `<!DOCTYPE html>
             <div id="chart" class="col ml-5 mt-3"></div>
 
             <div class="container mt-5">
-                <div class="row">
-                    <div class="col-md-12">
+                <div class="btn-group">
+                    <div class="dropdown dropdown-classification">
+                        <button class="btn btn-secondary dropdown-toggle ml-5 mr-3 button-classification" type="button" id="dropdownMenuButtonClassification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Classification
+                        </button>
 
-                        <select class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here..">
-                            <option value="" disabled selected>Choose your country</option>
-                            <option value="1">USA</option>
-                            <option value="2">Germany</option>
-                            <option value="3">France</option>
-                            <option value="4">Poland</option>
-                            <option value="5">Japan</option>
-                        </select>
-                        <label class="mdb-main-label">Label example</label>
-                        <button class="btn-save btn btn-primary btn-sm">Save</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        </div>
+                    </div>
 
+                    <div class="dropdown dropdown-group">
+                        <button class="btn btn-secondary dropdown-toggle button-classification" type="button" id="dropdownMenuButtonClassification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Group
+                        </button>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div id="subChart0" class="row"></div>
-                </div>
+                <div id="subChart" class="col ml-5 mt-3"></div>
             </div>
         </div>
     </main>
 
-    <footer class="container-fluid text-right bg-light py-3 font-weight-bold page-footer">
+    <footer class="container-fluid text-right bg-light py-3 mt-5 font-weight-bold page-footer">
         SIBUR, 2019
     </footer>
 
@@ -99,13 +100,13 @@ var html = `<!DOCTYPE html>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <script src="../../../d3_resources/d3.min.js"></script>
-    <script src="../../../d3_resources/d3_timeseries.min.js"></script>
-    <script src="../../../d3_resources/create-example-data.js"></script>
+    <script src="d3_resources/d3.min.js"></script>
+    <script src="d3_resources/d3_timeseries.min.js"></script>
+    <script src="d3_resources/create-example-data.js"></script>
 
 
     
-    <script src="../../../index.js"></script>
+    <script src="index.js"></script>
 </body>
 
 </html>`;

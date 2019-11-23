@@ -35,31 +35,32 @@
             <div id="chart" class="col ml-5 mt-3"></div>
 
             <div class="container mt-5">
-                <div class="row">
-                    <div class="col-md-12">
+                <div class="btn-group">
+                    <div class="dropdown dropdown-classification">
+                        <button class="btn btn-secondary dropdown-toggle ml-5 mr-3 button-classification" type="button" id="dropdownMenuButtonClassification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Classification
+                        </button>
 
-                        <select class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here..">
-                            <option value="" disabled selected>Choose your country</option>
-                            <option value="1">USA</option>
-                            <option value="2">Germany</option>
-                            <option value="3">France</option>
-                            <option value="4">Poland</option>
-                            <option value="5">Japan</option>
-                        </select>
-                        <label class="mdb-main-label">Label example</label>
-                        <button class="btn-save btn btn-primary btn-sm choose-button">Save</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        </div>
+                    </div>
 
+                    <div class="dropdown dropdown-group">
+                        <button class="btn btn-secondary dropdown-toggle button-classification" type="button" id="dropdownMenuButtonClassification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Group
+                        </button>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div id="subChart0" class="row"></div>
-                </div>
+                <div id="subChart" class="col ml-5 mt-3"></div>
             </div>
         </div>
     </main>
 
-    <footer class="container-fluid text-right bg-light py-3 font-weight-bold page-footer">
+    <footer class="container-fluid text-right bg-light py-3 mt-5 font-weight-bold page-footer">
         SIBUR, 2019
     </footer>
 

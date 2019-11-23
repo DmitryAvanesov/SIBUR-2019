@@ -30,3 +30,8 @@ header.page-header > img.logo {
 h2.sub-title {
     font-size: 1.5em;
 }
+
+button.dropdown-toggle {
+    background-color: #008A91;
+    color: white;
+}
