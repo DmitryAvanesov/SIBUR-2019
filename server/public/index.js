@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     chart('#chart')
 
-    // readJSON();
+    readJSON();
 });
 
 function readJSON(){
