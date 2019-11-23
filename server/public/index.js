@@ -1,5 +1,7 @@
 ﻿"use strict";
 
+var charts = [["f1", "f2", "f3"]];
+
 document.addEventListener("DOMContentLoaded", function () {
     updateData();
     setInterval(updateData, 5000);
@@ -9,8 +11,14 @@ async function updateData() {
     let response = await fetch('./data/data.json');
     let parsed = await response.json();
     let csvData = await parsed.data;
-    await drawChart(csvData, ["f0"], "#chart");
-    await drawChart(csvData, ["f1", "f2", "f3"], "#chart2");
+
+    drawChart(csvData, ["f0"], "chart");
+    var chartTag = document.querySelector("#chart");
+
+    charts.forEach(function (item) {
+        chartTag = chartTag.nextElementSibling;
+        drawChart(csvData, item, chartTag.id);
+    });
 }
 
 function drawChart(csvData, attrArray, tagId) {
@@ -20,7 +28,7 @@ function drawChart(csvData, attrArray, tagId) {
     var maxValue = -1000000;
     var rangeCoef = 0.001;
 
-    var currentChart = document.querySelector(tagId);
+    var currentChart = document.querySelector(`#${tagId}`);
     currentChart.innerHTML = "";
 
     attrArray.forEach(function (attrArrayItem) {
@@ -43,8 +51,8 @@ function drawChart(csvData, attrArray, tagId) {
             data[i][attrArrayItem] = csvData[i][attrArrayItem];
         }
 
-        chart.addSerie(data.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: "#a6cee3", label: "value" }).width(820);
+        chart.addSerie(data.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: "#a6cee3", label: "value" }).width(800).height(400);
     });
 
-    chart('#chart');
+    chart(`#${tagId}`);
 }

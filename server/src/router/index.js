@@ -64,7 +64,7 @@ var html = `<!DOCTYPE html>
 
         <div class="row d-flex justify-content-center">
             <div id="chart" class="col ml-5 mt-3"></div>
-            <div id="chart2" class="col ml-5 mt-3"></div>
+            <div id="subChart0" class="col ml-5 mt-3"></div>
         </div>
     </main>
 
