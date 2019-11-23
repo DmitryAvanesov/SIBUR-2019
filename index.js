@@ -1,32 +1,17 @@
 ﻿"use strict";
 
-window.NAVBAR_HEIGHT = 56;
-
 document.addEventListener("DOMContentLoaded", function () {
-    let anchorLinks = document.querySelectorAll("nav.navbar a.anchor-link");
-    anchorLinks.forEach(function (item) {
-        item.addEventListener("click", ScrollPageUp);
-    });
+    var data = createRandomData(80, [0, 1000], 0.01)
+    // [{date:new Date('2013-01-01'),n:120,n3:200,ci_up:127,ci_down:115},...]
 
-    let signUpButton = document.querySelector("form button.sign-up-button");
-    signUpButton.addEventListener("click", FillModalWindow);
+    var chart = d3_timeseries()
+        .addSerie(data.slice(0, 60), { x: 'date', y: 'n' }, { interpolate: 'linear', color: "#a6cee3", label: "value" })
+        .addSerie(data.slice(50),
+            { x: 'date', y: 'n3', ci_up: 'ci_up', ci_down: 'ci_down' },
+            { interpolate: 'monotone', dashed: true, color: "#a6cee3", label: "prediction" })
+        .width(820)
+
+    chart('#chart')
 });
 
-
-let ScrollPageUp = function () {
-    window.setTimeout(function () {
-        window.scrollBy(0, -window.NAVBAR_HEIGHT);
-    }, 0);
-}
-
-let FillModalWindow = function () {
-    let modalTitle = document.querySelector("#accountModalLabel");
-    let modalContent = document.querySelectorAll("div.modal-content > div.modal-body div.content-label");
-    let formInput = document.querySelectorAll("form input.form-control");
-
-    modalTitle.innerHTML = `New account for ${formInput[1].value}`;
-
-    for (let i = 0; i < modalContent.length; i++) {
-        modalContent[i].innerHTML = formInput[i].value;
-    }
-}
+// [{date:new Date('2013-01-01'),n:120,n3:200,ci_up:127,ci_down:115},...]
