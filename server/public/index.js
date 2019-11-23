@@ -5,6 +5,14 @@ var charts = [["f1", "f2", "f3"]];
 document.addEventListener("DOMContentLoaded", function () {
     updateData();
     setInterval(updateData, 5000);
+
+    var chooseButtons = document.querySelectorAll(".choose-button");
+
+    chooseButtons.forEach(function (item) {
+        item.addEventListener("click", function () {
+
+        });
+    });
 });
 
 async function updateData() {
@@ -17,7 +25,7 @@ async function updateData() {
 
     charts.forEach(function (item) {
         chartTag = chartTag.nextElementSibling;
-        drawChart(csvData, item, chartTag.id);
+        drawChart(csvData, item, chartTag.lastElementChild.lastElementChild.id);
     });
 }
 

@@ -62,9 +62,31 @@ var html = `<!DOCTYPE html>
             </h2>
         </div>
 
-        <div class="row d-flex justify-content-center">
+        <div class="row">
             <div id="chart" class="col ml-5 mt-3"></div>
-            <div id="subChart0" class="col ml-5 mt-3"></div>
+
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <select class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here..">
+                            <option value="" disabled selected>Choose your country</option>
+                            <option value="1">USA</option>
+                            <option value="2">Germany</option>
+                            <option value="3">France</option>
+                            <option value="4">Poland</option>
+                            <option value="5">Japan</option>
+                        </select>
+                        <label class="mdb-main-label">Label example</label>
+                        <button class="btn-save btn btn-primary btn-sm">Save</button>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div id="subChart0" class="row"></div>
+                </div>
+            </div>
         </div>
     </main>
 

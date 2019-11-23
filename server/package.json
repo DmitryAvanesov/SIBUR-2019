@@ -27,6 +27,7 @@
         "koa-router": "^7.4.0",
         "koa-static": "^5.0.0",
         "module-alias": "^2.1.0",
-        "raw-body": "^2.3.3"
+        "raw-body": "^2.3.3",
+        "slim-select": "^1.23.1"
     }
 }
