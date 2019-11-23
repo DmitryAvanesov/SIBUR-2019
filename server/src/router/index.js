@@ -5,14 +5,6 @@ const router = new Router();
 
 router
     .get('/main', async (ctx) => {
-        // var d = { data : results };
-        // console.log(d);
-        // console.log(results);
-        // var json = JSON.stringify(d);
-        // console.log(json);
-        // fs.readFile('public/index.html', 'utf8', function (err, contents) {
-        //     console.log(contents);
-        // });
         ctx.body = getHTML();
         ctx.status = 200;
         ctx.type = 'text/html';
@@ -23,7 +15,7 @@ module.exports = router;
 
 
 function rewrite(json){
-    console.log(json);
+    // console.log(json);
 
     fs.writeFile("public/data/data.json", json, function(err) {
 
@@ -96,10 +88,10 @@ let int = setInterval(function(){
         .pipe(csv())
         .on('data', (data) => results.push(data))
         .on('end', () => {
-            console.log(results);
+            // console.log(results);
             obj["data"] = results;
             json = JSON.stringify(obj);
-            console.log(json);
+            // console.log(json);
             rewrite(json);
         });
-}, 10000);
+}, 1000);
