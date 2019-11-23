@@ -42,23 +42,33 @@ var html = `<!DOCTYPE html>
     <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="d3_resources/d3_timeseries.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../d3_resources/d3_timeseries.min.css" />
 
-    <link rel="stylesheet" type="text/css" href="index.css" />
+    <link rel="stylesheet" type="text/css" href="../../../index.css" />
 
     <!-- Web fonts -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 
 <body>
-    <header></header>
+    <header class="page-header d-flex">
+        <img src="media/logo.jpg" class="logo align-self-center ml-5" />
+    </header>
 
     <main class="container-fluid">
-        <div id="chart"></div>
+        <div class="row">
+            <h2 class="sub-title ml-5 mt-5">
+                Catalytic activity chart
+            </h2>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <div id="chart" class="col ml-5 mt-3"></div>
+        </div>
     </main>
 
-    <footer class="container-fluid text-center bg-light py-3 page-footer">
-        I am still sticky. With flexbox.
+    <footer class="container-fluid text-right bg-light py-3 font-weight-bold page-footer">
+        SIBUR, 2019
     </footer>
 
     <!-- Scripts -->
@@ -66,13 +76,13 @@ var html = `<!DOCTYPE html>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <script src="d3_resources/d3.min.js"></script>
-    <script src="d3_resources/d3_timeseries.min.js"></script>
-    <script src="d3_resources/create-example-data.js"></script>
+    <script src="../../../d3_resources/d3.min.js"></script>
+    <script src="../../../d3_resources/d3_timeseries.min.js"></script>
+    <script src="../../../d3_resources/create-example-data.js"></script>
 
 
     
-    <script src="index.js"></script>
+    <script src="../../../index.js"></script>
 </body>
 
 </html>`;

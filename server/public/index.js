@@ -1,13 +1,16 @@
 ﻿"use strict";
 
 document.addEventListener("DOMContentLoaded", function () {
-    setInterval(async () => {
-        let response = await fetch('./data/data.json');
-        let parsed = await response.json();
-        let csvData = await parsed.data;
-        await drawChart(csvData);
-    }, 5000);
+    updateData();
+    setInterval(updateData, 5000);
 });
+
+async function updateData() {
+    let response = await fetch('./data/data.json');
+    let parsed = await response.json();
+    let csvData = await parsed.data;
+    await drawChart(csvData);
+}
 
 function drawChart(csvData) {
     var minValue = 1000000;

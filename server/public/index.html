@@ -20,14 +20,24 @@
 </head>
 
 <body>
-    <header></header>
+    <header class="page-header d-flex">
+        <img src="media/logo.jpg" class="logo align-self-center ml-5" />
+    </header>
 
-    <main class="container-fluid">
-        <div id="chart"></div>
+    <main class="container">
+        <div class="row">
+            <h2 class="sub-title ml-5 mt-5">
+                Catalytic activity chart
+            </h2>
+        </div>
+
+        <div class="row">
+            <div id="chart" class="col ml-5 mt-3"></div>
+        </div>
     </main>
 
-    <footer class="container-fluid text-center bg-light py-3 page-footer">
-        I am still sticky. With flexbox.
+    <footer class="container-fluid text-right bg-light py-3 font-weight-bold page-footer">
+        SIBUR, 2019
     </footer>
 
     <!-- Scripts -->
