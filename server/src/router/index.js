@@ -5,21 +5,6 @@ const router = new Router();
 
 router
     .get('/main', async (ctx) => {
-        var results = [];
-        var obj = {};
-        var json;
-        var html;
-        var cond = false;
-        fs.createReadStream('public/data/data.csv')
-            .pipe(csv())
-            .on('data', (data) => results.push(data))
-            .on('end', () => {
-                console.log(results);
-                obj["data"] = results;
-                json = JSON.stringify(obj);
-                console.log(json);
-                rewrite(json);
-            });
         // var d = { data : results };
         // console.log(d);
         // console.log(results);
@@ -101,3 +86,20 @@ var html = `<!DOCTYPE html>
 </html>`;
 return html;
 }
+
+
+let int = setInterval(function(){
+    var results = [];
+    var obj = {};
+    var json;
+    fs.createReadStream('public/data/data.csv')
+        .pipe(csv())
+        .on('data', (data) => results.push(data))
+        .on('end', () => {
+            console.log(results);
+            obj["data"] = results;
+            json = JSON.stringify(obj);
+            console.log(json);
+            rewrite(json);
+        });
+}, 10000);
