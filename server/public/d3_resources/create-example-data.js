@@ -1,11 +1,11 @@
-function createRandomData(n, range, rand) {
+function createRandomData(n, range, date, rand) {
     if (range == null) range = [0, 100];
     if (rand == null) rand = 1 / 20;
     
     var num = range[0] + Math.floor(Math.random() * (range[1] - range[0]));
     var num2 = range[0] + Math.floor(Math.random() * (range[1] - range[0]));
     var num3 = num;
-    var d = new Date("2013-01-01");
+    var d = new Date(date);
     var data = [];
     var rgen = d3.randomNormal(0, (range[1] - range[0]) * rand);
     for (var i = 0; i < n; i++) {
@@ -25,4 +25,4 @@ function createRandomData(n, range, rand) {
     num2 = Math.min(Math.max(num2, range[0]), range[1]);
     }
     return data;
-    }
+}
