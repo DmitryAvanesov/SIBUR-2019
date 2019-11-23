@@ -5,6 +5,9 @@ function createRandomData(n, range, date, rand) {
     var num = range[0] + Math.floor(Math.random() * (range[1] - range[0]));
     var num2 = range[0] + Math.floor(Math.random() * (range[1] - range[0]));
     var num3 = num;
+    var num4 = num;
+    var num5 = num;
+    var num6 = num;
     var d = new Date(date);
     var data = [];
     var rgen = d3.randomNormal(0, (range[1] - range[0]) * rand);
@@ -14,6 +17,9 @@ function createRandomData(n, range, date, rand) {
         n: num,
         n2: num2,
         n3: num3,
+        n4: num4,
+        n5: num5,
+        n6: num6,
         ci_up: num3 * 1.05,
         ci_down: num3 * 0.95
     });
