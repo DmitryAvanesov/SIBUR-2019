@@ -209,6 +209,8 @@ function drawChart(csvData, predictionData, attrArray, tagId) {
         }
         for (let i = 0; i < predictionData.length; i++) {
             data2[i][attrArrayItem] = predictionData[i][attrArrayItem];
+            data2[i].ci_up = predictionData[i][attrArrayItem] * 1.09;
+            data2[i].ci_down = predictionData[i][attrArrayItem] * 0.91;
             maxDataLimit[csvData.length + i][attrArrayItem] = maxValue + 1;
             minDataLimit[csvData.length + i][attrArrayItem] = minValue;
         }
@@ -217,7 +219,7 @@ function drawChart(csvData, predictionData, attrArray, tagId) {
 
         chart.addSerie(data.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: "#a6cee3", label: names[attrArrayItem] }).width(800).height(400);
         chart.addSerie(maxDataLimit.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: minMaxColor, label: "Max limit" }).width(800).height(400);
-        chart.addSerie(data2.slice(predictionData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', dashed: true ,color: "#008A91", label: names[attrArrayItem] }).width(800).height(400);
+        chart.addSerie(data2.slice(predictionData.length - timeInterval), { x: 'date', y: attrArrayItem, ci_up: 'ci_up', ci_down: 'ci_down' }, { interpolate: 'linear', dashed: true ,color: "#008A91", label: names[attrArrayItem] }).width(800).height(400);
         chart.addSerie(minDataLimit.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: minMaxColor, label: "Min limit" }).width(800).height(400);
     });
 

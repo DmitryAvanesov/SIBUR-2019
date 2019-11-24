@@ -20,8 +20,8 @@ function createRandomData(n, range, date, rand) {
         n4: num4,
         n5: num5,
         n6: num6,
-        ci_up: num3 * 1.05,
-        ci_down: num3 * 0.95
+        ci_up: num * 1.09,
+        ci_down: num * 0.91
     });
     d = new Date(d.getTime() + 60000);
     num = num + rgen();

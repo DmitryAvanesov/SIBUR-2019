@@ -38,7 +38,7 @@ var html = `<!DOCTYPE html>
     <!-- Meta/title -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Web-Frontend11</title>
+    <title>SIBUR CHALLENGE 2019</title>
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -67,7 +67,7 @@ var html = `<!DOCTYPE html>
             <div id="chart" class="col ml-5 mt-3"></div>
         </div>
 
-        <div class="row mt-5">
+        <div class="row">
             <h2 class="sub-title col-6 ml-5 mt-5">
                 Specific attributes chart
             </h2>
