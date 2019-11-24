@@ -107,6 +107,8 @@ function selectInit() {
         classificationMenu.appendChild(newDropdownItem);
 
         newDropdownItem.addEventListener("click", function () {
+            document.querySelector("#dropdownMenuButtonClassification").nextElementSibling.innerHTML = event.target.innerHTML;
+
             var groupMenu = document.querySelector(".dropdown-group > .dropdown-menu");
             groupMenu.innerHTML = '';
             var chosenClassification = this.id;
@@ -120,6 +122,8 @@ function selectInit() {
                 groupMenu.appendChild(newDropdownItem);
 
                 newDropdownItem.addEventListener("click", function () {
+                    document.querySelector("#dropdownMenuButtonGroup").nextElementSibling.innerHTML = event.target.innerHTML;
+
                     var attributeMenu = document.querySelector(".dropdown-attribute > .dropdown-menu");
                     attributeMenu.innerHTML = '';
 
@@ -133,6 +137,8 @@ function selectInit() {
                         attributeMenu.appendChild(newDropdownItem);
 
                         newDropdownItem.addEventListener("click", function () {
+                            document.querySelector("#dropdownMenuButtonAttribute").nextElementSibling.innerHTML = event.target.innerHTML;
+
                             charts = [this.id];
                             console.log(charts, subChartData, subChartData[chosenClassification])
                             updateData();
@@ -191,18 +197,28 @@ function drawChart(csvData, predictionData, attrArray, tagId) {
 
     var data = createRandomData(csvData.length, [minValue * (1 - rangeCoef), maxValue * (1 + rangeCoef)], csvData[0].date);
     var data2 = createRandomData(predictionData.length, [minValue * (1 - rangeCoef), maxValue * (1 + rangeCoef)], predictionData[0].date);
+    var maxDataLimit = createRandomData(predictionData.length + csvData.length, [(maxValue + 1) * (1 - rangeCoef), (maxValue + 1) * (1 + rangeCoef)], csvData[0].date);
+    var minDataLimit = createRandomData(predictionData.length + csvData.length, [(maxValue + 1) * (1 - rangeCoef), (maxValue + 1) * (1 + rangeCoef)], csvData[0].date);
     var chart = d3_timeseries();
 
     attrArray.forEach(function (attrArrayItem) {
         for (let i = 0; i < csvData.length; i++) {
             data[i][attrArrayItem] = csvData[i][attrArrayItem];
+            maxDataLimit[i][attrArrayItem] = maxValue + 1;
+            minDataLimit[i][attrArrayItem] = minValue;
         }
         for (let i = 0; i < predictionData.length; i++) {
             data2[i][attrArrayItem] = predictionData[i][attrArrayItem];
+            maxDataLimit[csvData.length + i][attrArrayItem] = maxValue + 1;
+            minDataLimit[csvData.length + i][attrArrayItem] = minValue;
         }
 
+        const minMaxColor = "#37898C";
+
         chart.addSerie(data.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: "#a6cee3", label: names[attrArrayItem] }).width(800).height(400);
-        chart.addSerie(data2.slice(predictionData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: "#008A91", label: names[attrArrayItem] }).width(800).height(400);
+        chart.addSerie(maxDataLimit.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: minMaxColor, label: "Max limit" }).width(800).height(400);
+        chart.addSerie(data2.slice(predictionData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', dashed: true ,color: "#008A91", label: names[attrArrayItem] }).width(800).height(400);
+        chart.addSerie(minDataLimit.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: minMaxColor, label: "Min limit" }).width(800).height(400);
     });
 
     chart(`#${tagId}`);

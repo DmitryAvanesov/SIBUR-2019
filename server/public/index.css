@@ -34,4 +34,9 @@ h2.sub-title {
 button.dropdown-toggle {
     background-color: #008A91;
     color: white;
+    width: 200px;
+}
+
+.chosen-item {
+    font-size: 0.75rem;
 }

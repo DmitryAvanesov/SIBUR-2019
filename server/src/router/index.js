@@ -75,21 +75,21 @@ var html = `<!DOCTYPE html>
             <div class="col-6 btn-group mt-3">
                 <div class="dropdown dropdown-classification">
                     <button class="btn btn-secondary dropdown-toggle ml-5 mr-5" type="button" id="dropdownMenuButtonClassification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-
+                    <div class="chosen-item ml-5">-</div>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     </div>
                 </div>
 
                 <div class="dropdown dropdown-group">
-                    <button class="btn btn-secondary dropdown-toggle mr-5" type="button" id="dropdownMenuButtonClassification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-
+                    <button class="btn btn-secondary dropdown-toggle mr-5" type="button" id="dropdownMenuButtonGroup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    <div class="chosen-item">-</div>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     </div>
                 </div>
 
                 <div class="dropdown dropdown-attribute">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonClassification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonAttribute" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    <div class="chosen-item">-</div>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     </div>
                 </div>
