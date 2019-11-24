@@ -76,7 +76,25 @@ var names = {
     'f53': 'Д18А Датчики веса',
     'f54': 'Д19А Датчики веса',
     'f55': 'Д20А Датчики веса'
-}
+};
+
+var limits = {
+    'f17': 347.6713429093361,
+    'f18': 347.0468672513962,
+    'f19': 345.08644527196884,
+    'f38': 344.2404544353485,
+    'f39': 344.16965767741203,
+    'f40': 344.84897235035896,
+    'f41': 344.23028895258904,
+    'f45': 344.6773652136326,
+    'f46': 339.0474087893963,
+    'f47': 339.11603105068207,
+    'f48': 338.15083983540535,
+    'f49': 340.20320078730583,
+    'f50': 343.423761934042,
+    'f51': 336.5848099887371,
+    'f52': 336.4985717535019
+};
 
 document.addEventListener("DOMContentLoaded", function () {
     var updateRate = 5000;
@@ -192,35 +210,34 @@ function drawChart(csvData, predictionData, attrArray, tagId) {
                 maxValue = csvDataItem[attrArrayItem];
             }
         });
-        console.log(minValue, maxValue);
     });
 
     var data = createRandomData(csvData.length, [minValue * (1 - rangeCoef), maxValue * (1 + rangeCoef)], csvData[0].date);
     var data2 = createRandomData(predictionData.length, [minValue * (1 - rangeCoef), maxValue * (1 + rangeCoef)], predictionData[0].date);
     var maxDataLimit = createRandomData(predictionData.length + csvData.length, [(maxValue + 1) * (1 - rangeCoef), (maxValue + 1) * (1 + rangeCoef)], csvData[0].date);
-    var minDataLimit = createRandomData(predictionData.length + csvData.length, [(maxValue + 1) * (1 - rangeCoef), (maxValue + 1) * (1 + rangeCoef)], csvData[0].date);
+    //var minDataLimit = createRandomData(predictionData.length + csvData.length, [(maxValue + 1) * (1 - rangeCoef), (maxValue + 1) * (1 + rangeCoef)], csvData[0].date);
     var chart = d3_timeseries();
 
     attrArray.forEach(function (attrArrayItem) {
         for (let i = 0; i < csvData.length; i++) {
             data[i][attrArrayItem] = csvData[i][attrArrayItem];
-            maxDataLimit[i][attrArrayItem] = maxValue + 1;
-            minDataLimit[i][attrArrayItem] = minValue;
+            maxDataLimit[i][attrArrayItem] = limits[attrArrayItem];
+            //minDataLimit[i][attrArrayItem] = minValue;
         }
         for (let i = 0; i < predictionData.length; i++) {
             data2[i][attrArrayItem] = predictionData[i][attrArrayItem];
             data2[i].ci_up = predictionData[i][attrArrayItem] * 1.09;
             data2[i].ci_down = predictionData[i][attrArrayItem] * 0.91;
-            maxDataLimit[csvData.length + i][attrArrayItem] = maxValue + 1;
-            minDataLimit[csvData.length + i][attrArrayItem] = minValue;
+            maxDataLimit[csvData.length + i][attrArrayItem] = limits[attrArrayItem];
+            //minDataLimit[csvData.length + i][attrArrayItem] = minValue;
         }
 
         const minMaxColor = "#37898C";
 
         chart.addSerie(data.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: "#a6cee3", label: names[attrArrayItem] }).width(800).height(400);
         chart.addSerie(maxDataLimit.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: minMaxColor, label: "Max limit" }).width(800).height(400);
-        chart.addSerie(data2.slice(predictionData.length - timeInterval), { x: 'date', y: attrArrayItem, ci_up: 'ci_up', ci_down: 'ci_down' }, { interpolate: 'linear', dashed: true ,color: "#008A91", label: names[attrArrayItem] }).width(800).height(400);
-        chart.addSerie(minDataLimit.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: minMaxColor, label: "Min limit" }).width(800).height(400);
+        chart.addSerie(data2.slice(predictionData.length - timeInterval), { x: 'date', y: attrArrayItem, ci_up: 'ci_up', ci_down: 'ci_down' }, { interpolate: 'linear', dashed: true, color: "#008A91", label: names[attrArrayItem] }).width(800).height(400);
+        //chart.addSerie(minDataLimit.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: minMaxColor, label: "Min limit" }).width(800).height(400);
     });
 
     chart(`#${tagId}`);
