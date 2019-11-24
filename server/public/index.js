@@ -214,30 +214,34 @@ function drawChart(csvData, predictionData, attrArray, tagId) {
 
     var data = createRandomData(csvData.length, [minValue * (1 - rangeCoef), maxValue * (1 + rangeCoef)], csvData[0].date);
     var data2 = createRandomData(predictionData.length, [minValue * (1 - rangeCoef), maxValue * (1 + rangeCoef)], predictionData[0].date);
-    var maxDataLimit = createRandomData(predictionData.length + csvData.length, [(maxValue + 1) * (1 - rangeCoef), (maxValue + 1) * (1 + rangeCoef)], csvData[0].date);
-    //var minDataLimit = createRandomData(predictionData.length + csvData.length, [(maxValue + 1) * (1 - rangeCoef), (maxValue + 1) * (1 + rangeCoef)], csvData[0].date);
+    if (attrArray[0] !== "activity") {
+        var maxDataLimit = createRandomData(predictionData.length + csvData.length, [(maxValue + 1) * (1 - rangeCoef), (maxValue + 1) * (1 + rangeCoef)], csvData[0].date);
+    }
     var chart = d3_timeseries();
 
     attrArray.forEach(function (attrArrayItem) {
         for (let i = 0; i < csvData.length; i++) {
             data[i][attrArrayItem] = csvData[i][attrArrayItem];
-            maxDataLimit[i][attrArrayItem] = limits[attrArrayItem];
-            //minDataLimit[i][attrArrayItem] = minValue;
+            if (attrArrayItem !== "activity") {
+                maxDataLimit[i][attrArrayItem] = limits[attrArrayItem];
+            }
         }
         for (let i = 0; i < predictionData.length; i++) {
             data2[i][attrArrayItem] = predictionData[i][attrArrayItem];
             data2[i].ci_up = predictionData[i][attrArrayItem] * 1.09;
             data2[i].ci_down = predictionData[i][attrArrayItem] * 0.91;
-            maxDataLimit[csvData.length + i][attrArrayItem] = limits[attrArrayItem];
-            //minDataLimit[csvData.length + i][attrArrayItem] = minValue;
+            if (attrArrayItem !== "activity") {
+                maxDataLimit[csvData.length + i][attrArrayItem] = limits[attrArrayItem];
+            }
         }
 
         const minMaxColor = "#37898C";
 
-        chart.addSerie(data.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: "#a6cee3", label: names[attrArrayItem] }).width(800).height(400);
-        chart.addSerie(maxDataLimit.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: minMaxColor, label: "Max limit" }).width(800).height(400);
+        chart.addSerie(data.slice(0), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: "#a6cee3", label: names[attrArrayItem] }).width(800).height(400);
+        if (attrArray[0] !== "activity") {
+            chart.addSerie(maxDataLimit.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: minMaxColor, label: "Max limit" }).width(800).height(400);
+        }
         chart.addSerie(data2.slice(predictionData.length - timeInterval), { x: 'date', y: attrArrayItem, ci_up: 'ci_up', ci_down: 'ci_down' }, { interpolate: 'linear', dashed: true, color: "#008A91", label: names[attrArrayItem] }).width(800).height(400);
-        //chart.addSerie(minDataLimit.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: minMaxColor, label: "Min limit" }).width(800).height(400);
     });
 
     chart(`#${tagId}`);
