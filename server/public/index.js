@@ -1,6 +1,9 @@
 ﻿"use strict";
 
-var charts;
+var charts = [];
+
+var titleText = ["График активности катализатора", "Температурный режим"];
+var buttonText = ["Классификация", "Группа признаков", "Признак"];
 
 var subChartData = {
     'Группировка по реактору': {
@@ -76,12 +79,24 @@ var names = {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    var updateRate = 5000;
+
     updateData();
     selectInit();
-    setInterval(updateData, 5000);
+    setInterval(updateData, updateRate);
 });
 
 function selectInit() {
+    var buttons = document.querySelectorAll("button");
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].innerHTML = buttonText[i];
+    }
+
+    var subTitles = document.querySelectorAll("h2.sub-title");
+    for (let i = 0; i < subTitles.length; i++) {
+        subTitles[i].innerHTML = titleText[i];
+    }
+
     for (var element in subChartData) {
         var newDropdownItem = document.createElement("div");
         var classificationMenu = document.querySelector(".dropdown-classification > .dropdown-menu");
@@ -94,10 +109,10 @@ function selectInit() {
         newDropdownItem.addEventListener("click", function () {
             var groupMenu = document.querySelector(".dropdown-group > .dropdown-menu");
             groupMenu.innerHTML = '';
+            var chosenClassification = this.id;
 
             for (var elem in subChartData[event.target.id]) {
                 var newDropdownItem = document.createElement("div");
-                var currentDict = subChartData[event.target.id];
 
                 newDropdownItem.className = "dropdown-item";
                 newDropdownItem.id = elem;
@@ -105,8 +120,24 @@ function selectInit() {
                 groupMenu.appendChild(newDropdownItem);
 
                 newDropdownItem.addEventListener("click", function () {
-                    charts = currentDict[event.target.id];
-                    updateData();
+                    var attributeMenu = document.querySelector(".dropdown-attribute > .dropdown-menu");
+                    attributeMenu.innerHTML = '';
+
+                    console.log(subChartData, subChartData[chosenClassification], chosenClassification);
+                    for (var el of subChartData[chosenClassification][event.target.id]) {
+                        var newDropdownItem = document.createElement("div");
+
+                        newDropdownItem.className = "dropdown-item";
+                        newDropdownItem.id = el;
+                        newDropdownItem.innerHTML = names[el];
+                        attributeMenu.appendChild(newDropdownItem);
+
+                        newDropdownItem.addEventListener("click", function () {
+                            charts = [this.id];
+                            console.log(charts, subChartData, subChartData[chosenClassification])
+                            updateData();
+                        })
+                    }
                 })
             }
         })
@@ -118,11 +149,17 @@ async function updateData() {
     let parsed = await response.json();
     let csvData = await parsed.data;
 
-    drawChart(csvData, ["f0"], "chart");
-    drawChart(csvData, charts, "subChart");
+    let predictionResponse = await fetch('./data/prediction.json');
+    let predParsed = await predictionResponse.json();
+    let predData = await predParsed.data;
+
+    drawChart(csvData, predData, ["activity"], "chart");
+    if (charts != undefined) {
+        drawChart(csvData, predData, charts, "subChart");
+    }
 }
 
-function drawChart(csvData, attrArray, tagId) {
+function drawChart(csvData, predictionData, attrArray, tagId) {
     const timeInterval = 1440;
 
     var minValue = 1000000;
@@ -141,18 +178,31 @@ function drawChart(csvData, attrArray, tagId) {
                 maxValue = csvDataItem[attrArrayItem];
             }
         });
+        predictionData.forEach(function (csvDataItem) {
+            if (csvDataItem[attrArrayItem] < minValue) {
+                minValue = csvDataItem[attrArrayItem];
+            }
+            if (csvDataItem[attrArrayItem] > maxValue) {
+                maxValue = csvDataItem[attrArrayItem];
+            }
+        });
         console.log(minValue, maxValue);
     });
 
     var data = createRandomData(csvData.length, [minValue * (1 - rangeCoef), maxValue * (1 + rangeCoef)], csvData[0].date);
+    var data2 = createRandomData(predictionData.length, [minValue * (1 - rangeCoef), maxValue * (1 + rangeCoef)], predictionData[0].date);
     var chart = d3_timeseries();
 
     attrArray.forEach(function (attrArrayItem) {
         for (let i = 0; i < csvData.length; i++) {
             data[i][attrArrayItem] = csvData[i][attrArrayItem];
         }
+        for (let i = 0; i < predictionData.length; i++) {
+            data2[i][attrArrayItem] = predictionData[i][attrArrayItem];
+        }
 
         chart.addSerie(data.slice(csvData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: "#a6cee3", label: names[attrArrayItem] }).width(800).height(400);
+        chart.addSerie(data2.slice(predictionData.length - timeInterval), { x: 'date', y: attrArrayItem }, { interpolate: 'linear', color: "#008A91", label: names[attrArrayItem] }).width(800).height(400);
     });
 
     chart(`#${tagId}`);
