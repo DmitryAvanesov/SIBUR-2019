@@ -6,7 +6,7 @@
     <!-- Meta/title -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Web-Frontend11</title>
+    <title>SIBUR CHALLENGE 2019</title>
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -20,14 +20,55 @@
 </head>
 
 <body>
-    <header></header>
+    <header class="page-header d-flex">
+        <img src="media/logo.jpg" class="logo align-self-center ml-5" />
+    </header>
 
-    <main class="container-fluid">
-        <div id="chart"></div>
+    <main class="container">
+        <div class="row">
+            <h2 class="sub-title ml-5 mt-5">
+                Catalytic activity chart
+            </h2>
+        </div>
+
+        <div class="row">
+            <div id="chart" class="col ml-5 mt-3"></div>
+        </div>
+
+        <div class="row">
+            <h2 class="sub-title col-6 ml-5 mt-5">
+                Specific attributes chart
+            </h2>
+
+            <div class="col-6 btn-group mt-3">
+                <div class="dropdown dropdown-classification">
+                    <button class="btn btn-secondary dropdown-toggle ml-5 mr-5" type="button" id="dropdownMenuButtonClassification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    <div class="chosen-item ml-5">-</div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    </div>
+                </div>
+
+                <div class="dropdown dropdown-group">
+                    <button class="btn btn-secondary dropdown-toggle mr-5" type="button" id="dropdownMenuButtonGroup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    <div class="chosen-item">-</div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    </div>
+                </div>
+
+                <div class="dropdown dropdown-attribute">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonAttribute" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    <div class="chosen-item">-</div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    </div>
+                </div>
+            </div>
+
+            <div id="subChart" class="col-12 ml-5 mt-3"></div>
+        </div>
     </main>
 
-    <footer class="container-fluid text-center bg-light py-3 page-footer">
-        I am still sticky. With flexbox.
+    <footer class="container-fluid text-right bg-light py-3 mt-5 font-weight-bold page-footer">
+        SIBUR, 2019
     </footer>
 
     <!-- Scripts -->
@@ -38,8 +79,6 @@
     <script src="d3_resources/d3.min.js"></script>
     <script src="d3_resources/d3_timeseries.min.js"></script>
     <script src="d3_resources/create-example-data.js"></script>
-
-
     
     <script src="index.js"></script>
 </body>

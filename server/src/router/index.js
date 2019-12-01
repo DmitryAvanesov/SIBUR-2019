@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const fs = require('fs');
 const csv = require('csv-parser');
+// const { spawn } = require('child_process');
 const router = new Router();
 
 router
@@ -14,10 +15,10 @@ router
 module.exports = router;
 
 
-function rewrite(json){
+function rewrite(json, path){
     // console.log(json);
 
-    fs.writeFile("public/data/data.json", json, function(err) {
+    fs.writeFile(path, json, function(err) {
 
         if(err) {
             return console.log(err);
@@ -37,7 +38,7 @@ var html = `<!DOCTYPE html>
     <!-- Meta/title -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Web-Frontend11</title>
+    <title>SIBUR CHALLENGE 2019</title>
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -51,14 +52,55 @@ var html = `<!DOCTYPE html>
 </head>
 
 <body>
-    <header></header>
+    <header class="page-header d-flex">
+        <img src="media/logo.jpg" class="logo align-self-center ml-5" />
+    </header>
 
-    <main class="container-fluid">
-        <div id="chart"></div>
+    <main class="container">
+        <div class="row">
+            <h2 class="sub-title ml-5 mt-5">
+                Catalytic activity chart
+            </h2>
+        </div>
+
+        <div class="row">
+            <div id="chart" class="col ml-5 mt-3"></div>
+        </div>
+
+        <div class="row">
+            <h2 class="sub-title col-6 ml-5 mt-5">
+                Specific attributes chart
+            </h2>
+
+            <div class="col-6 btn-group mt-3">
+                <div class="dropdown dropdown-classification">
+                    <button class="btn btn-secondary dropdown-toggle ml-5 mr-5" type="button" id="dropdownMenuButtonClassification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    <div class="chosen-item ml-5">-</div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    </div>
+                </div>
+
+                <div class="dropdown dropdown-group">
+                    <button class="btn btn-secondary dropdown-toggle mr-5" type="button" id="dropdownMenuButtonGroup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    <div class="chosen-item">-</div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    </div>
+                </div>
+
+                <div class="dropdown dropdown-attribute">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonAttribute" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    <div class="chosen-item">-</div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    </div>
+                </div>
+            </div>
+
+            <div id="subChart" class="col-12 ml-5 mt-3"></div>
+        </div>
     </main>
 
-    <footer class="container-fluid text-center bg-light py-3 page-footer">
-        I am still sticky. With flexbox.
+    <footer class="container-fluid text-right bg-light py-3 mt-5 font-weight-bold page-footer">
+        SIBUR, 2019
     </footer>
 
     <!-- Scripts -->
@@ -82,16 +124,30 @@ return html;
 
 let int = setInterval(function(){
     var results = [];
-    var obj = {};
-    var json;
+    var results_2 = [];
     fs.createReadStream('public/data/data.csv')
         .pipe(csv())
         .on('data', (data) => results.push(data))
         .on('end', () => {
+            var obj = {};
+            var json;
             // console.log(results);
             obj["data"] = results;
             json = JSON.stringify(obj);
             // console.log(json);
-            rewrite(json);
-        });
-}, 1000);
+            rewrite(json, "public/data/data.json");
+            
+    });
+    fs.createReadStream('public/data/prediction.csv')
+        .pipe(csv())
+        .on('data', (data) => results_2.push(data))
+        .on('end', () => {
+            var obj = {};
+            var json;
+            obj["data"] = results_2;
+            json = JSON.stringify(obj);
+            rewrite(json, "public/data/prediction.json");
+            
+    });
+
+}, 1500);
